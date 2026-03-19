@@ -26,40 +26,40 @@ export const LEVELS: LevelConfig[] = Array.from({ length: 50 }, (_, i) => {
     tables = [tableNum];
     isSequential = id % 2 !== 0;
     description = `${tableNum} 的乘法表 (${isSequential ? '顺序' : '随机'})`;
-    timeLimit = isSequential ? 60 : 45;
+    timeLimit = isSequential ? 75 : 60;
   } else if (id <= 28) {
     // 25-28: Small Mix (1-3)
     tables = [1, 2, 3];
     questionCount = 15;
-    timeLimit = 50;
+    timeLimit = 65;
     difficulty = 'medium';
     description = '混合练习 (1-3)';
   } else if (id <= 32) {
     // 29-32: Small Mix (4-6)
     tables = [4, 5, 6];
     questionCount = 15;
-    timeLimit = 50;
+    timeLimit = 65;
     difficulty = 'medium';
     description = '混合练习 (4-6)';
   } else if (id <= 36) {
     // 33-36: Small Mix (7-9)
     tables = [7, 8, 9];
     questionCount = 15;
-    timeLimit = 50;
+    timeLimit = 65;
     difficulty = 'medium';
     description = '混合练习 (7-9)';
   } else if (id <= 40) {
     // 37-40: Small Mix (10-12)
     tables = [10, 11, 12];
     questionCount = 15;
-    timeLimit = 50;
+    timeLimit = 65;
     difficulty = 'medium';
     description = '混合练习 (10-12)';
   } else if (id <= 45) {
     // 41-45: Full Mix (1-12)
     tables = Array.from({ length: 12 }, (_, i) => i + 1);
     questionCount = 20;
-    timeLimit = 60;
+    timeLimit = 75;
     difficulty = 'hard';
     description = '全表大乱斗 (1-12)';
   } else {
@@ -67,8 +67,8 @@ export const LEVELS: LevelConfig[] = Array.from({ length: 50 }, (_, i) => {
     tables = Array.from({ length: 12 }, (_, i) => i + 1);
     // Progressively increase question count: 46:25, 47:28, 48:32, 49:35, 50:40
     const counts = [25, 28, 32, 35, 40];
-    // Increase time limits: 46:90s, 47:100s, 48:120s, 49:140s, 50:180s
-    const times = [90, 100, 120, 140, 180];
+    // Increase time limits (original * 1.25): 46:115s, 47:125s, 48:150s, 49:175s, 50:225s
+    const times = [115, 125, 150, 175, 225];
     questionCount = counts[id - 46];
     timeLimit = times[id - 46];
     difficulty = 'expert';

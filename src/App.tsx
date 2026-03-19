@@ -253,24 +253,24 @@ export default function App() {
   };
 
   const renderMenu = () => (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-[#E4E3E0] p-6 font-sans">
+    <div className="flex flex-col items-center justify-center h-screen bg-[#E4E3E0] p-4 sm:p-6 font-sans overflow-hidden">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-8 sm:mb-12"
+        className="text-center mb-6 sm:mb-10 flex-none"
       >
-        <div className="flex justify-center mb-4">
+        <div className="flex justify-center mb-3 sm:mb-4">
           <div className="bg-[#141414] p-3 sm:p-4 rounded-2xl rotate-3">
             <Brain className="w-10 h-10 sm:w-12 sm:h-12 text-[#E4E3E0]" />
           </div>
         </div>
-        <h1 className="text-3xl sm:text-5xl font-black text-[#141414] tracking-tighter uppercase mb-2">
+        <h1 className="text-3xl sm:text-5xl font-black text-[#141414] tracking-tighter uppercase mb-1 sm:mb-2">
           乘法表大冒险
         </h1>
         <p className="text-[#141414]/60 font-medium italic text-sm sm:text-base">Master the Tables: Level 1 - 50</p>
       </motion.div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 max-w-6xl w-full overflow-y-auto max-h-[60vh] sm:max-h-[65vh] p-4 sm:p-6 bg-white/50 rounded-2xl sm:rounded-3xl border border-[#141414]/10">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 max-w-6xl w-full overflow-y-auto flex-1 p-4 sm:p-6 bg-white/50 rounded-2xl sm:rounded-3xl border border-[#141414]/10 mb-4">
         {LEVELS.map((level) => {
           const count = completionCounts[level.id] || 0;
           
@@ -332,126 +332,128 @@ export default function App() {
     const progress = ((currentQuestionIndex) / questions.length) * 100;
 
     return (
-      <div className="flex flex-col min-h-screen bg-[#141414] text-[#E4E3E0] p-4 sm:p-6 font-mono overflow-x-hidden">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 sm:mb-8">
-          <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
-            <button 
-              onClick={() => setGameState('menu')}
-              className="p-2 hover:bg-white/10 rounded-full transition-colors"
-            >
-              <Home className="w-5 h-5 sm:w-6 sm:h-6" />
-            </button>
-            <div className="bg-[#E4E3E0] text-[#141414] px-3 sm:px-4 py-1 rounded-full font-black text-xs sm:text-sm uppercase whitespace-nowrap">
-              Level {currentLevel}
-            </div>
-            <div className={`flex items-center gap-1 sm:gap-2 text-xs sm:text-sm font-bold ${timeLeft <= 10 ? 'text-red-500 animate-pulse' : 'opacity-70'}`}>
-              <Timer className="w-3 h-3 sm:w-4 sm:h-4" />
-              {timeLeft}s
-            </div>
-          </div>
-          <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto">
-            <div className="flex flex-col items-start sm:items-end">
-              {streak > 1 && (
-                <motion.div 
-                  initial={{ scale: 0.5, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  className="text-yellow-400 font-black text-[10px] sm:text-xs uppercase mb-1"
-                >
-                  {streak} Combo! 🔥
-                </motion.div>
-              )}
-              <div className="text-[10px] sm:text-xs opacity-50 uppercase mb-1">
-                Progress: {currentQuestionIndex + 1} / {questions.length}
+      <div className="flex flex-col h-screen bg-[#141414] text-[#E4E3E0] font-mono overflow-hidden">
+        <div className="max-w-3xl mx-auto w-full h-full flex flex-col p-4 sm:p-8">
+          {/* Header */}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4 sm:mb-8 flex-none">
+            <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
+              <button 
+                onClick={() => setGameState('menu')}
+                className="p-2 hover:bg-white/10 rounded-full transition-colors"
+              >
+                <Home className="w-5 h-5 sm:w-6 sm:h-6" />
+              </button>
+              <div className="bg-[#E4E3E0] text-[#141414] px-3 sm:px-4 py-1 rounded-full font-black text-xs sm:text-sm uppercase whitespace-nowrap">
+                Level {currentLevel}
+              </div>
+              <div className={`flex items-center gap-1 sm:gap-2 text-xs sm:text-sm font-bold ${timeLeft <= 10 ? 'text-red-500 animate-pulse' : 'opacity-70'}`}>
+                <Timer className="w-3 h-3 sm:w-4 sm:h-4" />
+                {timeLeft}s
               </div>
             </div>
-            <div className="w-24 sm:w-32 h-1.5 sm:h-2 bg-white/10 rounded-full overflow-hidden ml-4 sm:ml-0">
-              <motion.div 
-                className="h-full bg-[#E4E3E0]" 
-                initial={{ width: 0 }}
-                animate={{ width: `${progress}%` }}
-                transition={{ duration: 0.2 }}
-              />
+            <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto">
+              <div className="flex flex-col items-start sm:items-end">
+                {streak > 1 && (
+                  <motion.div 
+                    initial={{ scale: 0.5, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    className="text-yellow-400 font-black text-[10px] sm:text-xs uppercase mb-1"
+                  >
+                    {streak} Combo! 🔥
+                  </motion.div>
+                )}
+                <div className="text-[10px] sm:text-xs opacity-50 uppercase mb-1">
+                  Progress: {currentQuestionIndex + 1} / {questions.length}
+                </div>
+              </div>
+              <div className="w-24 sm:w-32 h-1.5 sm:h-2 bg-white/10 rounded-full overflow-hidden ml-4 sm:ml-0">
+                <motion.div 
+                  className="h-full bg-[#E4E3E0]" 
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress}%` }}
+                  transition={{ duration: 0.2 }}
+                />
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Question Area */}
-        <div className="flex-1 flex flex-col items-center justify-center mb-8">
-          <motion.div 
-            key={currentQuestionIndex}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ 
-              opacity: 1, 
-              y: 0,
-              x: isShaking ? [0, -10, 10, -10, 10, 0] : 0
-            }}
-            transition={{ 
-              duration: isShaking ? 0.4 : 0.15,
-              times: isShaking ? [0, 0.2, 0.4, 0.6, 0.8, 1] : undefined
-            }}
-            className="text-center"
-          >
-            <div className="text-5xl sm:text-8xl font-black tracking-tighter mb-4 flex items-center justify-center gap-2 sm:gap-4">
-              <span>{currentQ?.a}</span>
-              <span className="text-white/30">×</span>
-              <span>{currentQ?.b}</span>
-              <span className="text-white/30">=</span>
-              <span className={`min-w-[80px] sm:min-w-[120px] border-b-4 ${feedback === 'correct' ? 'text-green-400 border-green-400' : feedback === 'wrong' ? 'text-red-400 border-red-400' : 'border-white/20'}`}>
-                {userInput || '?'}
-              </span>
-            </div>
-            
-            {feedback === 'wrong' && (
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-red-400 font-bold text-xl uppercase tracking-widest"
-              >
-                错误！惩罚：该题多做2遍
-              </motion.div>
-            )}
-          </motion.div>
-        </div>
-
-        {/* Number Pad */}
-        <div className="max-w-md mx-auto w-full grid grid-cols-3 gap-2 sm:gap-4 mb-4 sm:mb-8">
-          {['1', '2', '3', '4', '5', '6', '7', '8', '9', 'C', '0', 'OK'].map((btn) => (
-            <motion.button
-              key={btn}
-              whileTap={{ scale: 0.9 }}
-              onClick={() => {
-                if (btn === 'C') handleClear();
-                else if (btn === 'OK') handleSubmit();
-                else handleNumberClick(btn);
+          {/* Question Area */}
+          <div className="flex-1 flex flex-col items-center justify-center min-h-0">
+            <motion.div 
+              key={currentQuestionIndex}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ 
+                opacity: 1, 
+                y: 0,
+                x: isShaking ? [0, -10, 10, -10, 10, 0] : 0
               }}
-              className={`
-                h-16 sm:h-20 rounded-xl sm:rounded-2xl text-2xl sm:text-3xl font-black flex items-center justify-center
-                ${btn === 'OK' ? 'bg-[#E4E3E0] text-[#141414] col-span-1' : 
-                  btn === 'C' ? 'bg-red-500/20 text-red-500 border border-red-500/50' : 
-                  'bg-white/5 border border-white/10 hover:bg-white/10'}
-              `}
+              transition={{ 
+                duration: isShaking ? 0.4 : 0.15,
+                times: isShaking ? [0, 0.2, 0.4, 0.6, 0.8, 1] : undefined
+              }}
+              className="text-center py-4 sm:py-8"
             >
-              {btn}
-            </motion.button>
-          ))}
+              <div className="text-5xl sm:text-8xl font-black tracking-tighter mb-4 flex items-center justify-center gap-2 sm:gap-4">
+                <span>{currentQ?.a}</span>
+                <span className="text-white/30">×</span>
+                <span>{currentQ?.b}</span>
+                <span className="text-white/30">=</span>
+                <span className={`min-w-[80px] sm:min-w-[120px] border-b-4 ${feedback === 'correct' ? 'text-green-400 border-green-400' : feedback === 'wrong' ? 'text-red-400 border-red-400' : 'border-white/20'}`}>
+                  {userInput || '?'}
+                </span>
+              </div>
+              
+              {feedback === 'wrong' && (
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-red-400 font-bold text-lg sm:text-xl uppercase tracking-widest"
+                >
+                  错误！惩罚：该题多做2遍
+                </motion.div>
+              )}
+            </motion.div>
+          </div>
+
+          {/* Number Pad */}
+          <div className="max-w-md mx-auto w-full grid grid-cols-3 gap-2 sm:gap-4 mb-2 sm:mb-4 flex-none">
+            {['1', '2', '3', '4', '5', '6', '7', '8', '9', 'C', '0', 'OK'].map((btn) => (
+              <motion.button
+                key={btn}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => {
+                  if (btn === 'C') handleClear();
+                  else if (btn === 'OK') handleSubmit();
+                  else handleNumberClick(btn);
+                }}
+                className={`
+                  h-14 sm:h-20 rounded-xl sm:rounded-2xl text-2xl sm:text-3xl font-black flex items-center justify-center
+                  ${btn === 'OK' ? 'bg-[#E4E3E0] text-[#141414] col-span-1' : 
+                    btn === 'C' ? 'bg-red-500/20 text-red-500 border border-red-500/50' : 
+                    'bg-white/5 border border-white/10 hover:bg-white/10'}
+                `}
+              >
+                {btn}
+              </motion.button>
+            ))}
+          </div>
         </div>
       </div>
     );
   };
 
   const renderLevelComplete = () => (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-[#E4E3E0] p-4 sm:p-6 font-sans text-[#141414]">
+    <div className="flex flex-col items-center justify-center h-screen bg-[#E4E3E0] p-4 sm:p-6 font-sans text-[#141414] overflow-hidden">
       <motion.div 
         initial={{ scale: 0.5, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        className="bg-white p-8 sm:p-12 rounded-[2rem] sm:rounded-[3rem] border-4 border-[#141414] shadow-[8px_8px_0px_0px_rgba(20,20,20,1)] sm:shadow-[12px_12px_0px_0px_rgba(20,20,20,1)] text-center max-w-sm w-full"
+        className="bg-white p-6 sm:p-12 rounded-[2rem] sm:rounded-[3rem] border-4 border-[#141414] shadow-[8px_8px_0px_0px_rgba(20,20,20,1)] sm:shadow-[12px_12px_0px_0px_rgba(20,20,20,1)] text-center max-w-sm w-full"
       >
         <div className="flex justify-center mb-4 sm:mb-6">
           <Trophy className="w-16 h-16 sm:w-20 sm:h-20 text-yellow-500" />
         </div>
-        <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tighter mb-2">闯关成功!</h2>
-        <p className="text-base sm:text-lg font-bold opacity-60 mb-6 sm:mb-8 italic">Level {currentLevel} Completed</p>
+        <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tighter mb-1 sm:mb-2">闯关成功!</h2>
+        <p className="text-base sm:text-lg font-bold opacity-60 mb-4 sm:mb-8 italic">Level {currentLevel} Completed</p>
         
         <div className="space-y-4 mb-10">
           <div className="flex justify-between font-bold border-b border-[#141414]/10 pb-2">
@@ -483,17 +485,17 @@ export default function App() {
   );
 
   const renderGameOver = () => (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-red-50 p-4 sm:p-6 font-sans text-[#141414]">
+    <div className="flex flex-col items-center justify-center h-screen bg-red-50 p-4 sm:p-6 font-sans text-[#141414] overflow-hidden">
       <motion.div 
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="bg-white p-8 sm:p-12 rounded-[2rem] sm:rounded-[3rem] border-4 border-red-500 shadow-[8px_8px_0px_0px_rgba(239,68,68,1)] sm:shadow-[12px_12px_0px_0px_rgba(239,68,68,1)] text-center max-w-sm w-full"
+        className="bg-white p-6 sm:p-12 rounded-[2rem] sm:rounded-[3rem] border-4 border-red-500 shadow-[8px_8px_0px_0px_rgba(239,68,68,1)] sm:shadow-[12px_12px_0px_0px_rgba(239,68,68,1)] text-center max-w-sm w-full"
       >
         <div className="flex justify-center mb-4 sm:mb-6">
           <XCircle className="w-16 h-16 sm:w-20 sm:h-20 text-red-500" />
         </div>
-        <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tighter mb-2 text-red-500">时间到!</h2>
-        <p className="text-base sm:text-lg font-bold opacity-60 mb-6 sm:mb-8 italic">Level {currentLevel} Failed</p>
+        <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tighter mb-1 sm:mb-2 text-red-500">时间到!</h2>
+        <p className="text-base sm:text-lg font-bold opacity-60 mb-4 sm:mb-8 italic">Level {currentLevel} Failed</p>
         
         <p className="mb-10 font-medium text-gray-600">
           别灰心！乘法表需要多加练习才能熟练。再试一次吧！
