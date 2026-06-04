@@ -393,12 +393,12 @@ export default function App() {
               }}
               className="text-center py-4 sm:py-8"
             >
-              <div className="text-5xl sm:text-8xl font-black tracking-tighter mb-4 flex items-center justify-center gap-2 sm:gap-4">
+              <div className="text-3xl min-[370px]:text-4xl min-[480px]:text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter mb-4 flex items-center justify-center gap-1.5 sm:gap-4">
                 <span>{currentQ?.a}</span>
                 <span className="text-white/30">×</span>
                 <span>{currentQ?.b}</span>
                 <span className="text-white/30">=</span>
-                <span className={`min-w-[80px] sm:min-w-[120px] border-b-4 ${feedback === 'correct' ? 'text-green-400 border-green-400' : feedback === 'wrong' ? 'text-red-400 border-red-400' : 'border-white/20'}`}>
+                <span className={`min-w-[60px] min-[370px]:min-w-[80px] sm:min-w-[120px] px-1 border-b-4 ${feedback === 'correct' ? 'text-green-400 border-green-400' : feedback === 'wrong' ? 'text-red-400 border-red-400' : 'border-white/20'}`}>
                   {userInput || '?'}
                 </span>
               </div>
