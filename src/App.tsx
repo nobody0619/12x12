@@ -253,7 +253,7 @@ export default function App() {
   };
 
   const renderMenu = () => (
-    <div className="flex flex-col items-center justify-center h-screen bg-[#E4E3E0] p-4 sm:p-6 font-sans overflow-hidden">
+    <div className="app-screen flex flex-col items-center justify-center bg-[#E4E3E0] p-4 sm:p-6 font-sans">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -270,7 +270,7 @@ export default function App() {
         <p className="text-[#141414]/60 font-medium italic text-sm sm:text-base">Master the Tables: Level 1 - 50</p>
       </motion.div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 max-w-6xl w-full overflow-y-auto flex-1 p-4 sm:p-6 bg-white/50 rounded-2xl sm:rounded-3xl border border-[#141414]/10 mb-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 max-w-6xl w-full min-h-0 overflow-y-auto flex-1 p-4 sm:p-6 bg-white/50 rounded-2xl sm:rounded-3xl border border-[#141414]/10 mb-4">
         {LEVELS.map((level) => {
           const count = completionCounts[level.id] || 0;
           
@@ -320,7 +320,7 @@ export default function App() {
         })}
       </div>
 
-      <div className="mt-12 flex items-center gap-4 text-[#141414]/60 text-sm font-bold uppercase tracking-widest">
+      <div className="mt-2 sm:mt-6 flex flex-none items-center gap-4 text-[#141414]/60 text-sm font-bold uppercase tracking-widest">
         <Award className="w-5 h-5" />
         已通关: {Object.keys(completionCounts).length} / 50 关
       </div>
@@ -332,13 +332,14 @@ export default function App() {
     const progress = ((currentQuestionIndex) / questions.length) * 100;
 
     return (
-      <div className="flex flex-col h-screen bg-[#141414] text-[#E4E3E0] font-mono overflow-hidden">
-        <div className="max-w-3xl mx-auto w-full h-full flex flex-col p-4 sm:p-8">
+      <div className="app-screen flex flex-col bg-[#141414] text-[#E4E3E0] font-mono">
+        <div className="game-shell max-w-3xl mx-auto w-full h-full flex flex-col">
           {/* Header */}
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4 sm:mb-8 flex-none">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-2 sm:mb-4 flex-none">
             <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
               <button 
                 onClick={() => setGameState('menu')}
+                aria-label="返回主页"
                 className="p-2 hover:bg-white/10 rounded-full transition-colors"
               >
                 <Home className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -391,14 +392,14 @@ export default function App() {
                 duration: isShaking ? 0.4 : 0.15,
                 times: isShaking ? [0, 0.2, 0.4, 0.6, 0.8, 1] : undefined
               }}
-              className="text-center py-4 sm:py-8"
+              className="text-center py-1 sm:py-4"
             >
-              <div className="text-3xl min-[370px]:text-4xl min-[480px]:text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter mb-4 flex items-center justify-center gap-1.5 sm:gap-4">
+              <div className="game-equation font-black tracking-tighter mb-2 sm:mb-4 flex items-center justify-center">
                 <span>{currentQ?.a}</span>
                 <span className="text-white/30">×</span>
                 <span>{currentQ?.b}</span>
                 <span className="text-white/30">=</span>
-                <span className={`min-w-[60px] min-[370px]:min-w-[80px] sm:min-w-[120px] px-1 border-b-4 ${feedback === 'correct' ? 'text-green-400 border-green-400' : feedback === 'wrong' ? 'text-red-400 border-red-400' : 'border-white/20'}`}>
+                <span className={`game-answer px-1 border-b-4 ${feedback === 'correct' ? 'text-green-400 border-green-400' : feedback === 'wrong' ? 'text-red-400 border-red-400' : 'border-white/20'}`}>
                   {userInput || '?'}
                 </span>
               </div>
@@ -416,7 +417,7 @@ export default function App() {
           </div>
 
           {/* Number Pad */}
-          <div className="max-w-md mx-auto w-full grid grid-cols-3 gap-2 sm:gap-4 mb-2 sm:mb-4 flex-none">
+          <div className="game-keypad max-w-md mx-auto w-full grid grid-cols-3 mb-2 sm:mb-4 flex-none">
             {['1', '2', '3', '4', '5', '6', '7', '8', '9', 'C', '0', 'OK'].map((btn) => (
               <motion.button
                 key={btn}
@@ -426,14 +427,16 @@ export default function App() {
                   else if (btn === 'OK') handleSubmit();
                   else handleNumberClick(btn);
                 }}
-                className={`
-                  h-14 sm:h-20 rounded-xl sm:rounded-2xl text-2xl sm:text-3xl font-black flex items-center justify-center
+                aria-label={btn === '0' ? '数字零' : btn === 'C' ? '清除' : btn === 'OK' ? '确认答案' : `数字${btn}`}
+                className={`game-key
+                  rounded-xl sm:rounded-2xl font-black flex items-center justify-center
                   ${btn === 'OK' ? 'bg-[#E4E3E0] text-[#141414] col-span-1' : 
                     btn === 'C' ? 'bg-red-500/20 text-red-500 border border-red-500/50' : 
+                    btn === '0' ? 'zero-key bg-white/15 text-white border-2 border-white/50 hover:bg-white/25' :
                     'bg-white/5 border border-white/10 hover:bg-white/10'}
                 `}
               >
-                {btn}
+                {btn === '0' ? <span className="zero-digit">0</span> : btn}
               </motion.button>
             ))}
           </div>
@@ -443,7 +446,7 @@ export default function App() {
   };
 
   const renderLevelComplete = () => (
-    <div className="flex flex-col items-center justify-center h-screen bg-[#E4E3E0] p-4 sm:p-6 font-sans text-[#141414] overflow-hidden">
+    <div className="result-screen flex flex-col items-center justify-center bg-[#E4E3E0] p-4 sm:p-6 font-sans text-[#141414]">
       <motion.div 
         initial={{ scale: 0.5, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -485,7 +488,7 @@ export default function App() {
   );
 
   const renderGameOver = () => (
-    <div className="flex flex-col items-center justify-center h-screen bg-red-50 p-4 sm:p-6 font-sans text-[#141414] overflow-hidden">
+    <div className="result-screen flex flex-col items-center justify-center bg-red-50 p-4 sm:p-6 font-sans text-[#141414]">
       <motion.div 
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -520,7 +523,7 @@ export default function App() {
   );
 
   return (
-    <main className="min-h-screen select-none touch-manipulation">
+    <main className="min-h-dvh select-none touch-manipulation">
       {gameState === 'menu' && renderMenu()}
       {gameState === 'playing' && renderPlaying()}
       {gameState === 'level-complete' && renderLevelComplete()}
